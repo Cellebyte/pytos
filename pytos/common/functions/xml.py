@@ -14,7 +14,7 @@ def clean_namespaces_from_attribs(xml_node):
     for element in xml_node.iter():
         try:
             for key, value in element.attrib.items():
-                if re.search(':(?!\/\/)', value):
+                if re.search(r':(?!\/\/)', value):
                     value = value.split(NAMESPACE_DELIMETER)[1]
                     element.attrib[key] = value
         except AttributeError:
