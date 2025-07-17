@@ -1132,11 +1132,14 @@ class Subnet_Network_Object(Network_Object):
         return netaddr.IPNetwork(str(self.ip) + "/" + str(self.netmask or self.prefix))
 
     def _key(self):
-        return self.ip, self.netmask or self.prefix
+        if hasattr(self, "netmask"):
+            return self.ip, self.netmask
+        return self.ip, self.prefix
 
     def __repr__(self):
-        return 'Subnet Network Object. Name: {}, IP: {}, Netmask: {}'.format(self.display_name, self.ip,
-                                                                             self.netmask or self.prefix)
+        if hasattr(self,"netmask"):
+            return 'Subnet Network Object. Name: {}, IP: {}, Netmask: {}'.format(self.display_name, self.ip,self.netmask)
+        return 'Subnet Network Object. Name: {}, IP: {}, Prefix: {}'.format(self.display_name, self.ip,self.prefix)
 
     def __str__(self):
         return repr(self)
